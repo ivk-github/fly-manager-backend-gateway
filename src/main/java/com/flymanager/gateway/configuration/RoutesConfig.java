@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class RoutesConfig {
-	/** Dynamic routes configuration (fetching instances from eureka-server) **/
+	/** Dynamic routes configuration (fetching services instances from eureka-server) **/
 	@Bean
 	public DiscoveryClientRouteDefinitionLocator appRouteDefinitionLocator(ReactiveDiscoveryClient rdc, DiscoveryLocatorProperties dlp) {
 		return new DiscoveryClientRouteDefinitionLocator(rdc, dlp);
@@ -21,7 +21,10 @@ public class RoutesConfig {
 	@Bean
 	public RouteLocator routeLocator(RouteLocatorBuilder rlb) {
 		return rlb.routes()
-				.route((r)->r.path("/engins/**").uri("http://localhost:9101").id("r1"))
+				// Example of static route without load balancing
+				//.route((r)->r.path("/engins/**").uri("http://localhost:9101/").id("r1"))
+				// Example of static route with load balancing
+				//.route((r)->r.path("/engins/**").uri("lb://API-ENGINS").id("r1"))
 				.build();
 	}
 	*/
